@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+body {
+  background-color: #111;
+  color: #EEE;
+  font-family: 'Roboto Slab', serif;
+}
+.divf {
+  max-width: 500px;
+  max-height: 800;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  border: 2px solid #EEE;
+  margin: 30px;
+  padding: 10px;
+}
+#output{
+	  border: 2px solid #EEE;
+}
+#status{
+	color: orangered;
+}
+#success{
+	color: orangered;
+}
+button{
+	color: orangered;
+}
+	</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Bienvenu dans cette page</title>
+</head>
+	<body background-color="red">
+	  <div class="divf">
+		<form name="formid">
+		<select id="status" name="elselect" onChange="update()"></select>
+		<input  id="success" type="number" min=0 max=100 step=1 value="0">
+		</form>
+		<button type="submit" onclick="submit()">Submit</button>
+        <div id="output">Waiting for form submit...</div>
+      </div>
+		<script type="text/javascript">
+//--------------- déclaration et initialisation du tableau ------------------------
+const oppoStatus = [
+  {
+    "K_OPPO_STATUS": 1,
+    "STATUS": "1. Initial Contact",
+    "SUCCESS": 0
+  },
+  {
+    "K_OPPO_STATUS": 2,
+    "STATUS": "2. Demonstration",
+    "SUCCESS": 25
+  },
+  {
+    "K_OPPO_STATUS": 3,
+    "STATUS": "3. Proposal",
+    "SUCCESS": 50
+  },
+  {
+    "K_OPPO_STATUS": 4,
+    "STATUS": "4. Negotiation",
+    "SUCCESS": 75
+  },
+  {
+    "K_OPPO_STATUS": 5,
+    "STATUS": "5. Order",
+    "SUCCESS": 100
+  }
+];
+let elementStatus="";
+for (let i in oppoStatus) {
+elementStatus += '<option value="'+oppoStatus[i].SUCCESS+'">'+oppoStatus[i].STATUS+'</option>' + "";
+} 
+document.getElementById('status').innerHTML=elementStatus;
+
+//-------------- Debut de la fonction update() ------------------------------------------------
+			function update() {
+				let select = document.getElementById('status');
+				let option = select.options[select.selectedIndex];
+				document.getElementById('success').value = option.value;
+			}
+			update();
+//--------------- Fin de la fonction Update() ---------------------------------------------------------
+  function submit() {
+       let succ = success.value;
+       let stat = formid.elselect[formid.elselect.selectedIndex].text.charAt(0);
+       document.getElementById("output").innerHTML=JSON.stringify({status:Number(stat),success:Number(succ)});
+    }
+		</script>
+	</body>
+</html>
